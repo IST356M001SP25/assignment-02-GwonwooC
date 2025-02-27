@@ -27,3 +27,23 @@ Example:
 '''
 
 # TODO: Write code
+import json
+from packaging import parse_packaging, calc_total_units, get_unit
+
+if __name__ == '__main__':
+    parsed_packages = []
+    input_file = 'data/packaging.txt'
+    output_file = 'data/packaging.json'
+    
+    with open(input_file, 'r') as f:
+        lines = [line.strip() for line in f]
+    
+    for line in lines:
+        package = parse_packaging(line)
+        total_units = calc_total_units(package)
+        unit = get_unit(package)
+        print(f"{line} => total units: {total_units} {unit}")
+        parsed_packages.append(package)
+    
+    with open(output_file, 'w') as f:
+        json.dump(parsed_packages, f, indent=4)
